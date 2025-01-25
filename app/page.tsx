@@ -20,13 +20,15 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen">
+    <main className="relative">
       <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <ArchivingSection />
-      <ProjectsSection />
-      <CareerSection />
+      <div className="relative z-10 bg-black">
+        <AboutSection />
+        <SkillsSection />
+        <ArchivingSection />
+        <ProjectsSection />
+        <CareerSection />
+      </div>
     </main>
   );
 }
