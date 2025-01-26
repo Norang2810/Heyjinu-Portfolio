@@ -13,7 +13,7 @@ export function ArchivingSection() {
             items={[
               "프로젝트 소스 코드",
               "코딩 연습 저장소",
-              "40개 이상의 레포지토리"
+              "꾸준히 커밋하는 습관"
             ]}
             link="https://github.com/Norang2810"
             linkText="GitHub 방문하기 →"
@@ -25,9 +25,9 @@ export function ArchivingSection() {
             items={[
               "프로젝트 회고록",
               "기술 학습 내용 정리",
-              "월 1000+ 방문자"
+              "공부한 내용 복습차원 기록"
             ]}
-            link="https://your-blog-url.com"
+            link="https://velog.io/@norang2810/posts"
             linkText="블로그 방문하기 →"
           />
         </div>

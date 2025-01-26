@@ -4,34 +4,41 @@ import { useState, useEffect } from "react";
 import { Glasses } from "lucide-react";
 
 export function HeroSection() {
-  // 현재 스크롤 위치 상태
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(0);
 
-  // 스크롤 이벤트 핸들러
   useEffect(() => {
+    // 초기 window.innerHeight 설정
+    setWindowHeight(window.innerHeight);
+
     const handleScroll = () => {
-      const scrollTop = window.scrollY; // 페이지 전체의 스크롤 위치
+      const scrollTop = window.scrollY;
       setScrollPosition(scrollTop);
     };
 
-    // 스크롤 이벤트 등록
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    // 스크롤과 리사이즈 이벤트 등록
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
 
     // 컴포넌트 언마운트 시 이벤트 제거
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // 스크롤 위치에 따른 텍스트
   const getText = () => {
-    if (scrollPosition < window.innerHeight * 0.5) {
+    if (scrollPosition < windowHeight * 0.5) {
       return {
         title: "안녕하세요!",
         description: "풀스택 개발자입니다.",
         active: 0,
       };
-    } else if (scrollPosition < window.innerHeight * 1.5) {
+    } else if (scrollPosition < windowHeight * 1.5) {
       return {
         title: "환영합니다!",
         description: "사용자 경험을 디자인합니다.",
@@ -59,8 +66,20 @@ export function HeroSection() {
       {/* Hero 섹션 */}
       <section
         id="hero"
-        className="h-screen sticky top-0 flex flex-col items-center justify-center to-gray-50 bg-black text-white overflow-hidden"
+        className="h-screen sticky top-0 flex flex-col items-center justify-center to-gray-50 bg-teal-500 text-white overflow-hidden"
       >
+        {/* 스크롤 안내 텍스트 - 섹션 상단에 배치 */}
+        <div 
+          className="absolute top-32 left-1/2 -translate-x-1/2"
+          style={{
+            animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+          }}
+        >
+          <p className="text-sm font-light text-white/70 flex items-center gap-2">
+            스크롤해서 진행해주세요! <span className="inline-block animate-bounce">↓</span>
+          </p>
+        </div>
+
         <div className="text-center relative">
           {/* 더 큰 배경 안경 아이콘 */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-5">
@@ -106,13 +125,9 @@ export function HeroSection() {
           </div>
         </div>
       </section>
-
-      {/* Hero 이후 콘텐츠 */}
       <section className="h-[200vh] flex flex-col items-center justify-center bg-gray-100">
-        <h2 className="text-3xl font-bold">다음 섹션</h2>
-        <p className="text-lg text-gray-600 mt-4">
-          Hero 섹션 이후의 콘텐츠입니다.
-        </p>
+        <h2 className="text-3xl font-bold"></h2>
+        
       </section>
     </>
   );

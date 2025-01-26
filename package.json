@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "download-icons": "ts-node --project tsconfig.json scripts/downloadIcons.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "eslint": "^9",
-    "eslint-config-next": "15.1.6"
+    "eslint-config-next": "15.1.6",
+    "ts-node": "^10.9.2"
   }
 }
