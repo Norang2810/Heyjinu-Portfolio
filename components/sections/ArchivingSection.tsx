@@ -5,7 +5,7 @@ export function ArchivingSection() {
     <section id="archiving" className="section bg-gray-50 py-20">
       <div className="max-w-4xl mx-auto px-4" data-aos="fade-up">
         <h2 className="text-3xl font-bold mb-12 text-center">Archiving</h2>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-1 gap-8">
           <ArchiveCard 
             title="GitHub"
             icon="/icons/github.svg"
@@ -16,7 +16,7 @@ export function ArchivingSection() {
               "꾸준히 커밋하는 습관"
             ]}
             link="https://github.com/Norang2810"
-            linkText="GitHub 방문하기 →"
+            linkText="GitHub 방문하기 → "
           />
           <ArchiveCard 
             title="Technical Blog"

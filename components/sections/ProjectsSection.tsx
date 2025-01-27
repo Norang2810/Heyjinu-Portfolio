@@ -7,14 +7,30 @@ export function ProjectsSection() {
         <h2 className="text-3xl font-bold mb-12 text-center">Projects</h2>
         <div className="space-y-12">
           <ProjectCard 
-            title="프로젝트 제목 1"
-            description="프로젝트에 대한 간단한 설명이 들어갑니다. 주요 기능과 사용된 기술 스택을 설명합니다."
-            image="/projects/project1.png"
-            technologies={["React", "TypeScript", "Node.js"]}
-            githubUrl="#"
-            demoUrl="#"
+            title="해외축구 통합 커뮤니티 프로젝트"
+            description="교내활동 마이크로디그리 자바 풀스택 과정에서 만들었던 프로젝트(2명)"
+            image="/public/pl.jpg"
+            technologies={["HTML", "CSS", "JavaScript","Java","MySQL","Spring-boot","Git","GitHub","AWS"]}
+            githubUrl="https://github.com/Norang2810/Football-Project"
+            demoUrl="http://3.107.177.97:8080"
           />
           {/* 추가 프로젝트 카드 */}
+          <ProjectCard 
+            title="추모게시판"
+            description="교내활동 마이크로디그리 자바 풀스택 과정에서 만들었던 프로젝트(2명)"
+            image="/public/pl.jpg"
+            technologies={["HTML", "CSS", "JavaScript","Java","MySQL","Spring-boot","Git","GitHub","AWS"]}
+            githubUrl="https://github.com/Norang2810/Football-Project"
+            demoUrl="http://3.107.177.97:8080"
+          />
+          <ProjectCard 
+            title="Heyjinu포트폴리오"
+            description="교내활동 마이크로디그리 자바 풀스택 과정에서 만들었던 프로젝트(2명)"
+            image="/public/pl.jpg"
+            technologies={["HTML", "CSS", "JavaScript","Java","MySQL","Spring-boot","Git","GitHub","AWS"]}
+            githubUrl="https://github.com/Norang2810/Football-Project"
+            demoUrl="http://3.107.177.97:8080"
+          />
         </div>
       </div>
     </section>

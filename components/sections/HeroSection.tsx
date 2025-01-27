@@ -66,7 +66,7 @@ export function HeroSection() {
       {/* Hero 섹션 */}
       <section
         id="hero"
-        className="h-screen sticky top-0 flex flex-col items-center justify-center to-gray-50 bg-teal-500 text-white overflow-hidden"
+        className="h-screen sticky top-0 flex flex-col items-center justify-center to-gray-50 bg-black text-white overflow-hidden"
       >
         {/* 스크롤 안내 텍스트 - 섹션 상단에 배치 */}
         <div 
@@ -81,7 +81,7 @@ export function HeroSection() {
         </div>
 
         <div className="text-center relative">
-          {/* 더 큰 배경 안경 아이콘 */}
+          {/* 배경 안경 아이콘 */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-5">
             <Glasses className="w-[80rem] h-[80rem]" />
           </div>
