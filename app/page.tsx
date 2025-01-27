@@ -9,7 +9,6 @@ import { AboutSection } from "@/components/sections/AboutSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ArchivingSection } from "@/components/sections/ArchivingSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
-import { CareerSection } from "@/components/sections/CareerSection";
 
 export default function Home() {
   useEffect(() => {
@@ -26,7 +25,7 @@ export default function Home() {
         <AboutSection />
         <SkillsSection />
         <ArchivingSection />
-        <ProjectsSection />
+        <ProjectsSection /> 1
       </div>
     </main>
   );
