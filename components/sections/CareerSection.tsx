@@ -7,9 +7,9 @@ export function CareerSection() {
         <h2 className="text-3xl font-bold mb-12 text-center">Career</h2>
         <div className="space-y-8">
           <CareerCard 
-            company="회사명 1"
-            position="직책"
-            period="2020.01 - 현재"
+            company="무직"
+            position="무직"
+            period="해당없음"
             logo="/companies/company1.png"
             responsibilities={[
               "주요 업무 내용 1",

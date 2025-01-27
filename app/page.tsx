@@ -27,7 +27,6 @@ export default function Home() {
         <SkillsSection />
         <ArchivingSection />
         <ProjectsSection />
-        <CareerSection />
       </div>
     </main>
   );

@@ -8,7 +8,7 @@ export function ProjectsSection() {
         <div className="space-y-12">
           <ProjectCard 
             title="해외축구 통합 커뮤니티 프로젝트"
-            description="교내활동 마이크로디그리 자바 풀스택 과정에서 만들었던 프로젝트(2명)"
+            description="교내활동 마이크로디그리 자바 풀스택 과정에서 만들었던 프로젝트"
             image="/public/pl.jpg"
             technologies={["HTML", "CSS", "JavaScript","Java","MySQL","Spring-boot","Git","GitHub","AWS"]}
             githubUrl="https://github.com/Norang2810/Football-Project"
@@ -17,18 +17,18 @@ export function ProjectsSection() {
           {/* 추가 프로젝트 카드 */}
           <ProjectCard 
             title="추모게시판"
-            description="교내활동 마이크로디그리 자바 풀스택 과정에서 만들었던 프로젝트(2명)"
+            description="타입스크립트 언어공부를 위해 만든 프로젝트"
             image="/public/pl.jpg"
-            technologies={["HTML", "CSS", "JavaScript","Java","MySQL","Spring-boot","Git","GitHub","AWS"]}
-            githubUrl="https://github.com/Norang2810/Football-Project"
-            demoUrl="http://3.107.177.97:8080"
+            technologies={["TypeScript","Next.js","Tailwind","vercel"]}
+            githubUrl="https://github.com/Norang2810/Memorial-Project"
+            demoUrl="https://jpmemorial-project.vercel.app/"
           />
           <ProjectCard 
             title="Heyjinu포트폴리오"
-            description="교내활동 마이크로디그리 자바 풀스택 과정에서 만들었던 프로젝트(2명)"
+            description="취준생의 포트폴리오 프로젝트"
             image="/public/pl.jpg"
-            technologies={["HTML", "CSS", "JavaScript","Java","MySQL","Spring-boot","Git","GitHub","AWS"]}
-            githubUrl="https://github.com/Norang2810/Football-Project"
+            technologies={["TypeScript","Next.js","Tailwind","vercel"]}
+            githubUrl="https://github.com/Norang2810/Heyjinu-Portfolio"
             demoUrl="http://3.107.177.97:8080"
           />
         </div>
