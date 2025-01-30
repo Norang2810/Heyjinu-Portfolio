@@ -14,7 +14,7 @@ export function SkillsSection() {
       <div className="max-w-7xl mx-auto px-4" data-aos="fade-up">
         <h2 className="text-7xl font-bold mb-16 text-center text-white">Skills</h2>
         <div className="h-[800px] relative">
-          <Canvas camera={{ position: [25, 15, 25], fov: 40 }}>
+          <Canvas camera={{ position: [15, 15, 15], fov: 50 }}>
             <ambientLight intensity={0.7} />
             <pointLight position={[10, 10, 10]} intensity={2} />
             <spotLight position={[0, 10, 0]} intensity={1} />
@@ -35,7 +35,7 @@ export function SkillsSection() {
 }
 
 function SkillsCube() {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isRotating, setIsRotating] = useState(false);
 
@@ -44,9 +44,9 @@ function SkillsCube() {
     config: { mass: 5, tension: 400, friction: 50 },
   });
 
-  const boxSize = 12;
-  const cardWidth = boxSize * 0.9;
-  const cardHeight = cardWidth;
+  const boxSize = 6;
+  const pixelsPerUnit = 80;
+  const cardSize = boxSize * pixelsPerUnit;
 
   const faces = [
     { position: [0, 0, boxSize/2], rotation: [0, 0, 0] },
@@ -67,19 +67,9 @@ function SkillsCube() {
 
   return (
     <animated.group
-      ref={meshRef}
+      ref={groupRef}
       rotation={to(spring.rotation, (x, y, z) => [x, y, z])}
     >
-      <mesh>
-        <boxGeometry args={[boxSize, boxSize, boxSize]} />
-        <meshPhysicalMaterial
-          color="#ffffff"
-          roughness={0.2}
-          metalness={0.1}
-          transparent
-          opacity={0.05}
-        />
-      </mesh>
       {Object.entries(skillsData).map(([category, skills], index) => (
         <group
           key={category}
@@ -88,17 +78,20 @@ function SkillsCube() {
         >
           <Html
             transform
-            distanceFactor={1.2}
+            distanceFactor={1}
+            occlude
             style={{
-              width: `${cardWidth * 100}px`,
-              height: `${cardHeight * 100}px`,
-              padding: '16px',
-              background: 'rgba(255, 255, 255, 0.95)',
-              borderRadius: '16px',
+              width: `${cardSize}px`,
+              height: `${cardSize}px`,
+              padding: '12px',
+              background: 'rgba(255, 255, 255, 0.98)',
+              borderRadius: '0px',
               transform: 'translate(-50%, -50%)',
               transition: 'all 0.3s ease',
-              opacity: activeIndex === index ? 1 : 0.85,
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+              opacity: activeIndex === index ? 1 : 0.9,
+              boxShadow: 'none',
+              pointerEvents: 'auto',
+              border: '1px solid rgba(0, 0, 0, 0.1)',
             }}
             className="skill-card"
             onClick={() => rotateFace((index + 1) % 6)}

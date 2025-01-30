@@ -27,7 +27,7 @@ export function ProjectsSection() {
             title="Heyjinu포트폴리오"
             description="취준생의 포트폴리오 프로젝트"
             image="/public/pl.jpg"
-            technologies={["TypeScript","Next.js","Tailwind","vercel"]}
+            technologies={["TypeScript","Tailwind","Next.js","three.js","vercel",]}
             githubUrl="https://github.com/Norang2810/Heyjinu-Portfolio"
             demoUrl="http://3.107.177.97:8080"
           />
