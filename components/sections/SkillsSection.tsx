@@ -6,6 +6,7 @@ import { Html, OrbitControls } from "@react-three/drei";
 import { useSpring, animated, to } from "@react-spring/three";
 import * as THREE from "three";
 import { Dialog } from "@headlessui/react";
+import type { ThreeEvent } from "@react-three/fiber";
 
 // 각 면에 표시될 컴포넌트들
 import { FrontendSkills } from "./cube-faces/FrontendSkills";
@@ -26,16 +27,18 @@ const faceComponents = [
 ];
 
 export function SkillsSection() {
+  const [visitedFaces, setVisitedFaces] = useState<number[]>([]);
   const [selectedFace, setSelectedFace] = useState<number | null>(null);
-  const [visitedFaces, setVisitedFaces] = useState<Set<number>>(new Set());
   const SelectedComponent = selectedFace !== null ? faceComponents[selectedFace].Component : null;
 
   const handleFaceClick = (index: number) => {
     setSelectedFace(index);
-    setVisitedFaces(prev => new Set([...prev, index]));
+    if (!visitedFaces.includes(index)) {
+      setVisitedFaces(prev => [...prev, index]);
+    }
   };
 
-  const remainingFaces = 6 - visitedFaces.size;
+  const remainingFaces = 6 - visitedFaces.length;
 
   return (
     <section id="skills" className="section py-20 bg-black">
@@ -56,7 +59,7 @@ export function SkillsSection() {
               <div
                 key={index}
                 className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  visitedFaces.has(index) 
+                  visitedFaces.includes(index) 
                     ? 'bg-white' 
                     : 'bg-white/30'
                 }`}
@@ -119,26 +122,32 @@ function SkillsCube({
   visitedFaces 
 }: { 
   onFaceClick: (index: number) => void;
-  visitedFaces: Set<number>;
+  visitedFaces: number[];
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const [activeIndex, setActiveIndex] = useState(0); // 항상 0부터 시작
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // 방문하지 않은 다음 면을 찾는 함수
+  const findNextUnvisitedFace = (currentIndex: number) => {
+    for (let i = 1; i <= faceComponents.length; i++) {
+      const nextIndex = (currentIndex + i) % faceComponents.length;
+      if (!visitedFaces.includes(nextIndex)) {
+        return nextIndex;
+      }
+    }
+    return currentIndex; // 모든 면을 방문했다면 현재 면 유지
+  };
 
   useEffect(() => {
-    // 순차적으로 회전
-    const interval = setInterval(() => {
-      setActiveIndex(current => (current + 1) % faceComponents.length);
-    }, 3000);
+    // 아직 방문하지 않은 면이 있을 때만 자동 회전
+    if (visitedFaces.length < 6) {
+      const interval = setInterval(() => {
+        setActiveIndex(current => findNextUnvisitedFace(current));
+      }, 2000);
 
-    return () => clearInterval(interval);
-  }, []); // visitedFaces 의존성 제거
-
-  // 클릭 핸들러 수정
-  const handleFaceClick = (index: number, e: THREE.Event) => {
-    e.stopPropagation();
-    setActiveIndex(index);
-    onFaceClick(index);
-  };
+      return () => clearInterval(interval);
+    }
+  }, [visitedFaces]);
 
   const spring = useSpring({
     rotation: [0, activeIndex * (Math.PI / 3), 0],
@@ -147,14 +156,16 @@ function SkillsCube({
 
   const cubeSize = 8;
 
-  // faces 배열의 순서를 faceComponents 순서와 일치시킴
-  const faces = [
-    { position: [0, 0, cubeSize/2], rotation: [0, 0, 0] },             // Frontend
-    { position: [cubeSize/2, 0, 0], rotation: [0, Math.PI/2, 0] },     // Backend
-    { position: [0, 0, -cubeSize/2], rotation: [0, Math.PI, 0] },      // Deployment
-    { position: [-cubeSize/2, 0, 0], rotation: [0, -Math.PI/2, 0] },   // Community
-    { position: [0, cubeSize/2, 0], rotation: [-Math.PI/2, 0, 0] },    // Tools
-    { position: [0, -cubeSize/2, 0], rotation: [Math.PI/2, 0, 0] }     // Libraries
+  const faces: Array<{
+    position: THREE.Vector3Tuple;
+    rotation: THREE.EulerTuple;
+  }> = [
+    { position: [0, 0, cubeSize/2], rotation: [0, 0, 0] },
+    { position: [cubeSize/2, 0, 0], rotation: [0, Math.PI/2, 0] },
+    { position: [0, 0, -cubeSize/2], rotation: [0, Math.PI, 0] },
+    { position: [-cubeSize/2, 0, 0], rotation: [0, -Math.PI/2, 0] },
+    { position: [0, cubeSize/2, 0], rotation: [-Math.PI/2, 0, 0] },
+    { position: [0, -cubeSize/2, 0], rotation: [Math.PI/2, 0, 0] }
   ];
 
   return (
@@ -164,14 +175,22 @@ function SkillsCube({
     >
       {faces.map((face, index) => {
         const { color } = faceComponents[index];
-        const isVisited = visitedFaces.has(index);
+        const isVisited = visitedFaces.includes(index);
         
         return (
           <group
             key={index}
             position={face.position}
             rotation={face.rotation}
-            onClick={(e) => handleFaceClick(index, e)}
+            onClick={(e: ThreeEvent<MouseEvent>) => {
+              e.stopPropagation();
+              // 방문하지 않은 면만 클릭 가능
+              if (!isVisited) {
+                setActiveIndex(index);
+                onFaceClick(index);
+              }
+            }}
+            style={{ cursor: isVisited ? 'default' : 'pointer' }}
           >
             <mesh>
               <planeGeometry args={[cubeSize, cubeSize]} />
@@ -179,11 +198,29 @@ function SkillsCube({
                 color={color}
                 side={THREE.DoubleSide}
                 transparent
-                opacity={isVisited ? 0.8 : 0.6}
+                opacity={isVisited ? 0.5 : 0.8} // 방문한 면은 더 투명하게
                 emissive={isVisited ? "#000000" : "#ffffff"}
                 emissiveIntensity={isVisited ? 0 : 0.2}
               />
             </mesh>
+            {!isVisited && (
+              <Html
+                center
+                style={{
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                }}
+              >
+                <div 
+                  className="px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm text-white text-xl font-bold animate-pulse"
+                  style={{
+                    textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  {faceComponents[index].label}
+                </div>
+              </Html>
+            )}
           </group>
         );
       })}

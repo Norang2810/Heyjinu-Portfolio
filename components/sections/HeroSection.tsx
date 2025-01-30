@@ -66,7 +66,7 @@ export function HeroSection() {
       {/* Hero 섹션 */}
       <section
         id="hero"
-        className="h-screen sticky top-0 flex flex-col items-center justify-center to-gray-50 bg-black text-white overflow-hidden"
+        className="h-screen sticky top-0 flex flex-col items-center justify-center to-gray-50 bg-yellow-400 text-white overflow-hidden"
       >
         {/* 스크롤 안내 텍스트 - 섹션 상단에 배치 */}
         <div 
