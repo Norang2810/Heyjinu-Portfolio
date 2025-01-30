@@ -11,19 +11,19 @@ import type { ThreeEvent } from "@react-three/fiber";
 // 각 면에 표시될 컴포넌트들
 import { FrontendSkills } from "./cube-faces/FrontendSkills";
 import { BackendSkills } from "./cube-faces/BackendSkills";
+import { DatabaseSkills } from "./cube-faces/DatabaseSkills";
 import { DeploymentSkills } from "./cube-faces/DeploymentSkills";
-import { CommunitySkills } from "./cube-faces/CommunitySkills";
+import { VersionControlSkills } from "./cube-faces/VersionControlSkills";
 import { ToolsSkills } from "./cube-faces/ToolsSkills";
-import { LibrariesSkills } from "./cube-faces/LibrariesSkills";
 
 // 각 면의 정보 매핑
 const faceComponents = [
   { Component: FrontendSkills, label: "Frontend", color: "#4A90E2" },
   { Component: BackendSkills, label: "Backend", color: "#50C878" },
-  { Component: DeploymentSkills, label: "Deployment", color: "#F39C12" },
-  { Component: CommunitySkills, label: "Community", color: "#E74C3C" },
-  { Component: ToolsSkills, label: "Tools", color: "#9B59B6" },
-  { Component: LibrariesSkills, label: "Libraries", color: "#34495E" }
+  { Component: DatabaseSkills, label: "Database", color: "#F39C12" },
+  { Component: DeploymentSkills, label: "Deployment", color: "#E74C3C" },
+  { Component: VersionControlSkills, label: "Version Control", color: "#9B59B6" },
+  { Component: ToolsSkills, label: "Tools", color: "#34495E" }
 ];
 
 export function SkillsSection() {
@@ -126,32 +126,41 @@ function SkillsCube({
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isRotating, setIsRotating] = useState(false);
 
-  // 방문하지 않은 다음 면을 찾는 함수
-  const findNextUnvisitedFace = (currentIndex: number) => {
-    for (let i = 1; i <= faceComponents.length; i++) {
-      const nextIndex = (currentIndex + i) % faceComponents.length;
-      if (!visitedFaces.includes(nextIndex)) {
-        return nextIndex;
+  // 흔들림 애니메이션을 위한 spring 추가
+  const wobbleSpring = useSpring({
+    from: { wobble: 0 },
+    to: async (next) => {
+      while (true) {
+        await next({ wobble: 0.1 });
+        await next({ wobble: -0.1 });
       }
-    }
-    return currentIndex; // 모든 면을 방문했다면 현재 면 유지
-  };
-
-  useEffect(() => {
-    // 아직 방문하지 않은 면이 있을 때만 자동 회전
-    if (visitedFaces.length < 6) {
-      const interval = setInterval(() => {
-        setActiveIndex(current => findNextUnvisitedFace(current));
-      }, 2000);
-
-      return () => clearInterval(interval);
-    }
-  }, [visitedFaces]);
+    },
+    config: {
+      mass: 1,
+      tension: 120,
+      friction: 14,
+    },
+    // 회전 중에는 흔들림 효과 비활성화
+    pause: isRotating,
+  });
 
   const spring = useSpring({
     rotation: [0, activeIndex * (Math.PI / 3), 0],
-    config: { mass: 5, tension: 400, friction: 50 },
+    config: { 
+      mass: 5, 
+      tension: 400, 
+      friction: isRotating ? 50 : 100,
+    },
+    onChange: () => {
+      if (isRotating) {
+        const timer = setTimeout(() => {
+          setIsRotating(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }
+    },
   });
 
   const cubeSize = 8;
@@ -160,18 +169,21 @@ function SkillsCube({
     position: THREE.Vector3Tuple;
     rotation: THREE.EulerTuple;
   }> = [
-    { position: [0, 0, cubeSize/2], rotation: [0, 0, 0] },
-    { position: [cubeSize/2, 0, 0], rotation: [0, Math.PI/2, 0] },
-    { position: [0, 0, -cubeSize/2], rotation: [0, Math.PI, 0] },
-    { position: [-cubeSize/2, 0, 0], rotation: [0, -Math.PI/2, 0] },
-    { position: [0, cubeSize/2, 0], rotation: [-Math.PI/2, 0, 0] },
-    { position: [0, -cubeSize/2, 0], rotation: [Math.PI/2, 0, 0] }
+    { position: [0, 0, cubeSize/2], rotation: [0, 0, 0] },         // Frontend (정면)
+    { position: [cubeSize/2, 0, 0], rotation: [0, Math.PI/2, 0] }, // Backend (오른쪽)
+    { position: [0, 0, -cubeSize/2], rotation: [0, Math.PI, 0] },  // Database (뒷면)
+    { position: [-cubeSize/2, 0, 0], rotation: [0, -Math.PI/2, 0] },// Deployment (왼쪽)
+    { position: [0, cubeSize/2, 0], rotation: [-Math.PI/2, 0, 0] }, // Version Control (위)
+    { position: [0, -cubeSize/2, 0], rotation: [Math.PI/2, 0, 0] }  // Tools (아래)
   ];
 
   return (
     <animated.group
       ref={groupRef}
-      rotation={to(spring.rotation, (x, y, z) => [x, y, z])}
+      rotation={to(
+        [spring.rotation, wobbleSpring.wobble],
+        ([x, y, z], wobble) => [x + wobble, y, z]
+      )}
     >
       {faces.map((face, index) => {
         const { color } = faceComponents[index];
@@ -184,8 +196,8 @@ function SkillsCube({
             rotation={face.rotation}
             onClick={(e: ThreeEvent<MouseEvent>) => {
               e.stopPropagation();
-              // 방문하지 않은 면만 클릭 가능
               if (!isVisited) {
+                setIsRotating(true); // 클릭 시 회전 상태 활성화
                 setActiveIndex(index);
                 onFaceClick(index);
               }
@@ -198,7 +210,7 @@ function SkillsCube({
                 color={color}
                 side={THREE.DoubleSide}
                 transparent
-                opacity={isVisited ? 0.5 : 0.8} // 방문한 면은 더 투명하게
+                opacity={isVisited ? 0.5 : 0.8}
                 emissive={isVisited ? "#000000" : "#ffffff"}
                 emissiveIntensity={isVisited ? 0 : 0.2}
               />

@@ -11,7 +11,10 @@ export function FrontendSkills() {
         {skills.map((skill) => (
           <div key={skill.name} className="flex items-center gap-2 p-2 bg-white/80 rounded-lg">
             <Image src={skill.icon} alt={skill.name} width={32} height={32} />
-            <span className="text-sm font-medium">{skill.name}</span>
+            <div>
+              <span className="text-sm font-medium block">{skill.name}</span>
+              <span className="text-xs text-gray-500">{skill.category}</span>
+            </div>
           </div>
         ))}
       </div>

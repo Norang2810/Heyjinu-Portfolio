@@ -1,36 +1,46 @@
 interface Skill {
   name: string;
   icon: string;
+  category?: string;
 }
 
 export const skillsData: Record<string, Skill[]> = {
   frontend: [
-    { name: "HTML", icon: "/icons/html5.svg" },
-    { name: "CSS", icon: "/icons/css3.svg" },
-    { name: "JavaScript", icon: "/icons/javascript.svg" },
-    { name: "Tailwind CSS", icon: "/icons/tailwindcss.svg" },
-    { name: "TypeScript", icon: "/icons/typescript.svg" },
-    { name: "Next.js", icon: "/icons/nextjs.svg" },
+    // Languages
+    { name: "HTML", icon: "/icons/html.png", category: "Language" },
+    { name: "CSS", icon: "/icons/css.png", category: "Language" },
+    { name: "JavaScript", icon: "/icons/javascript.svg", category: "Language" },
+    { name: "TypeScript", icon: "/icons/typescript.svg", category: "Language" },
+    // Frameworks & Libraries
+    { name: "React", icon: "/icons/react.svg", category: "Framework" },
+    { name: "Next.js", icon: "/icons/nextjs.svg", category: "Framework" },
+    { name: "TailwindCSS", icon: "/icons/tailwindCSS.png", category: "Framework" },
+    { name: "@react-three/fiber", icon: "/icons/threejs.png", category: "Library" },
+    { name: "Lucide React", icon: "/icons/lucide.png", category: "Library" },
   ],
   backend: [
-    { name: "Java", icon: "/icons/java.svg" },
-    { name: "PHP", icon: "/icons/php.svg" },
-    { name: "MySQL", icon: "/icons/mysql.svg" },
+    // Languages
+    { name: "Java", icon: "/icons/java.svg", category: "Language" },
+    { name: "PHP", icon: "/icons/php.svg", category: "Language" },
+    // Framework & ORM
+    { name: "Spring Boot", icon: "/icons/springboot.png", category: "Framework" },
+    { name: "Prisma", icon: "/icons/prisma.png", category: "ORM" },
+  ],
+  database: [
+    { name: "MySQL", icon: "/icons/mysql.svg", category: "SQL" },
+    { name: "PostgreSQL", icon: "/icons/postgresql.png", category: "SQL" },
   ],
   deployment: [
-    { name: "Vercel", icon: "/icons/vercel.svg" },
-    { name: "AWS EC2", icon: "/icons/aws.svg" },
+    { name: "AWS EC2", icon: "/icons/ec2.png", category: "Cloud" },
+    { name: "Vercel", icon: "/icons/vercel.svg", category: "Platform" },
   ],
-  community: [
-    { name: "Git", icon: "/icons/git.svg" },
-    { name: "Figma", icon: "/icons/figma.svg" },
+  versionControl: [
+    { name: "Git", icon: "/icons/git.svg", category: "Version Control" },
+    { name: "GitHub", icon: "/icons/github.svg", category: "Platform" },
   ],
   tools: [
-    { name: "Vercel", icon: "/icons/vercel.svg" },
-    { name: "AWS EC2", icon: "/icons/aws.svg" },
+    { name: "VS Code", icon: "/icons/vscode.png", category: "Editor" },
+    { name: "Cursor AI", icon: "/icons/cursor ai.png", category: "Editor" },
+    { name: "Figma", icon: "/icons/figma.png", category: "Design" },
   ],
-  libraries: [
-    { name: "Git", icon: "/icons/git.svg" },
-    { name: "Figma", icon: "/icons/figma.svg" },
-  ]
 }; 
