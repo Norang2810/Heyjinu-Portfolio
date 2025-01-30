@@ -25,4 +25,12 @@ export const skillsData: Record<string, Skill[]> = {
     { name: "Git", icon: "/icons/git.svg" },
     { name: "Figma", icon: "/icons/figma.svg" },
   ],
+  tools: [
+    { name: "Vercel", icon: "/icons/vercel.svg" },
+    { name: "AWS EC2", icon: "/icons/aws.svg" },
+  ],
+  libraries: [
+    { name: "Git", icon: "/icons/git.svg" },
+    { name: "Figma", icon: "/icons/figma.svg" },
+  ]
 }; 

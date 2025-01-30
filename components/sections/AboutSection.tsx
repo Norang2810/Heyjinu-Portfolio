@@ -7,7 +7,7 @@ export function AboutSection() {
       </div>
 
       {/* 인적사항 */}
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center"> 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 text-center">
           <div>
             <h3 className="text-2xl font-semibold mb-4">이름</h3>
