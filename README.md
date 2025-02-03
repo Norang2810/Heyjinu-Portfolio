@@ -38,19 +38,22 @@
 
 
 ## 📁 프로젝트 구조
+
+```
 my-app/
 ├── components/
-│ └── sections/
-│ ├── AboutSection.tsx
-│ ├── SkillsSection.tsx
-│ ├── ProjectsSection.tsx
-│ └── ...
+│   └── sections/
+│       ├── AboutSection.tsx
+│       ├── SkillsSection.tsx
+│       ├── ProjectsSection.tsx
+│       └── ...
 ├── data/
-│ └── skills.ts
+│   └── skills.ts
 ├── public/
-│ └── icons/
+│   └── icons/
 └── scripts/
-└── downloadIcons.ts
+    └── downloadIcons.ts
+```
 
 
 
