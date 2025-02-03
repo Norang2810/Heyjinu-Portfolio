@@ -46,7 +46,10 @@ my-app/
 │       ├── AboutSection.tsx
 │       ├── SkillsSection.tsx
 │       ├── ProjectsSection.tsx
-│       └── ...
+|       ├── CarrerSection.tsx
+|       ├── ArchivingSection.tsx
+│       └── HeroSection.tsx
+|        
 ├── data/
 │   └── skills.ts
 ├── public/
