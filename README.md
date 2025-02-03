@@ -41,23 +41,54 @@
 
 ```
 my-app/
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
 ├── components/
+│   ├── Navbar.tsx
+│   ├── ui/
+│   │   └── button.tsx
 │   └── sections/
 │       ├── AboutSection.tsx
-│       ├── SkillsSection.tsx
+│       ├── ArchivingSection.tsx
+│       ├── CareerSection.tsx
+│       ├── HeroSection.tsx
 │       ├── ProjectsSection.tsx
-|       ├── CarrerSection.tsx
-|       ├── ArchivingSection.tsx
-│       └── HeroSection.tsx
-|        
+│       ├── SkillsSection.tsx
+│       └── cube-faces/
+│           ├── BackendSkills.tsx
+│           ├── DatabaseSkills.tsx
+│           ├── DeploymentSkills.tsx
+│           ├── FrontendSkills.tsx
+│           ├── ToolsSkills.tsx
+│           └── VersionControlSkills.tsx
 ├── data/
 │   └── skills.ts
+├── lib/
+│   └── utils.ts
 ├── public/
 │   └── icons/
-└── scripts/
-    └── downloadIcons.ts
+├── scripts/
+│   └── downloadIcons.ts
+├── next.config.js
+├── package.json
+├── postcss.config.js
+├── tailwind.config.ts
+└── tsconfig.json
 ```
 
+### 주요 디렉토리 설명
+
+- `app/`: Next.js 13+의 App Router 구조를 따르는 메인 페이지 구성
+- `components/`: 재사용 가능한 React 컴포넌트
+  - `ui/`: 버튼 등 기본 UI 컴포넌트
+  - `sections/`: 포트폴리오의 각 섹션 컴포넌트
+  - `cube-faces/`: 3D 스킬 큐브의 각 면 컴포넌트
+- `data/`: 스킬, 프로젝트 등의 정적 데이터
+- `lib/`: 유틸리티 함수 및 공통 로직
+- `public/`: 이미지, 아이콘 등 정적 파일
+- `scripts/`: 아이콘 다운로드 등 개발 보조 스크립트
 
 
 ## 🔧 Scripts
